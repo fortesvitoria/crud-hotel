@@ -52,6 +52,7 @@ A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e R
 * Atualizar Tipo de Quarto
 * Remover Tipo de Quarto
 
+
 **1.2 CRUD de Quartos:** 
 
 * Número do quarto;
