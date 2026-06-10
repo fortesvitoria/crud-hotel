@@ -39,7 +39,7 @@ Desenvolver uma API para gestão hoteleira que permita:
 A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e Regras de Negócio (RN) complexas, divididas estrategicamente entre a equipe para cobrir os seguintes requisitos:
 
 ### 🛏️ 1. Gerenciamento de Quartos e Categorias
-* **1.1 CRUD Tipo de Quarto:** 
+**1.1 CRUD Tipo de Quarto:** 
 
 * Nome do tipo (Simples, Duplo, Suíte);
 * Capacidade máxima de hóspedes.
@@ -52,7 +52,7 @@ A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e R
 * Atualizar Tipo de Quarto
 * Remover Tipo de Quarto
 
-* **1.2 CRUD de Quartos:** 
+**1.2 CRUD de Quartos:** 
 
 * Número do quarto;
 * Tipo do quarto;
@@ -72,7 +72,7 @@ A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e R
 * Remover Quarto
 
 ### 👤 2. Gestão de Clientes
-* **CRUD de Clientes:** 
+**CRUD de Clientes:** 
 
 * Nome completo;
 * CPF;
@@ -88,7 +88,7 @@ A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e R
 * Remover Cliente
 
 ### 📦 3. Gestão de Categorias de Produtos
-* **3.1 CRUD de Categoria de Produtos:** 
+**3.1 CRUD de Categoria de Produtos:** 
 
 * Nome;
 * Descrição.
@@ -102,7 +102,7 @@ A API está estruturada em módulos de CRUD (*Create, Read, Update, Delete*) e R
 * Remover Categoria
 
 
-* **3.2 CRUD de Produtos:** 
+**3.2 CRUD de Produtos:** 
 
 * Nome;
 * Categoria;
