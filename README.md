@@ -214,7 +214,7 @@ Funcionalidades:
 
 ---
 
-## 🚀 Tecnologias Sugeridas para o Projeto
+## 🚀 Tecnologias Utilizadas no Projeto
 * **Ambiente de Execução:** [Node.js](https://nodejs.org/)
 * **Framework Web:** [Express](https://expressjs.com/pt-br/)
 * **Linguagem:** JavaScript (ES6+)
