@@ -1,0 +1,88 @@
+PgAdmin4
+
+hotel_bd
+
+-- =========================
+-- ✅ CLIENTES
+-- =========================
+CREATE TABLE clientes (
+    cpf VARCHAR PRIMARY KEY,
+    nome TEXT NOT NULL,
+    telefone TEXT NOT NULL,
+    email TEXT NOT NULL
+);
+
+-- =========================
+-- ✅ TIPOS DE QUARTO
+-- =========================
+CREATE TABLE tipos_quarto (
+    id SERIAL PRIMARY KEY,
+    nome TEXT UNIQUE NOT NULL,
+    capacidade INT NOT NULL
+);
+
+-- =========================
+-- ✅ QUARTOS
+-- =========================
+CREATE TABLE quartos (
+    numero INT PRIMARY KEY,
+    tipo TEXT NOT NULL,
+    valor_diaria NUMERIC NOT NULL,
+    status TEXT DEFAULT 'disponível'
+);
+
+-- =========================
+-- ✅ CATEGORIAS
+-- =========================
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+-- =========================
+-- ✅ PRODUTOS
+-- =========================
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    categoria TEXT NOT NULL,
+    preco_unitario NUMERIC NOT NULL
+);
+
+-- =========================
+-- ✅ RESERVAS
+-- =========================
+CREATE TABLE reservas (
+    id SERIAL PRIMARY KEY,
+    cpf_cliente TEXT NOT NULL,
+    numero_quarto INT NOT NULL,
+    qtd_pessoas INT NOT NULL,
+    data_entrada DATE NOT NULL,
+    data_saida DATE NOT NULL,
+    data_criacao TIMESTAMP DEFAULT NOW()
+);
+
+-- =========================
+-- ✅ ESTADIAS
+-- =========================
+CREATE TABLE estadias (
+    id SERIAL PRIMARY KEY,
+    data_entrada TIMESTAMP NOT NULL,
+    data_saida TIMESTAMP,
+    numero_quarto INT NOT NULL,
+    valor_diaria NUMERIC NOT NULL,
+    cpf_cliente TEXT NOT NULL,
+    status TEXT DEFAULT 'ativa',
+    valor_total NUMERIC DEFAULT 0
+);
+
+-- =========================
+-- ✅ CONSUMO (RN3)
+-- =========================
+CREATE TABLE consumos (
+    id SERIAL PRIMARY KEY,
+    id_estadia INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL
+);
