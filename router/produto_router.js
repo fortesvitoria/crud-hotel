@@ -1,12 +1,14 @@
 const express = require('express');
-const router = express.Router();
-const hotelController = require('../controller/hotel_controller');
+const routerProdutos = express.Router();
 
-//  CLIENTES
+const produtoController = require('../controller/produto_controller');
 
-router.post('/clientes', hotelController.createCliente);
-router.get('/clientes', hotelController.getClientes);
-router.put('/clientes/:cpf', hotelController.updateCliente);
-router.delete('/clientes/:cpf', hotelController.deleteCliente);
+// ROTAS PARA PRODUTOS
 
-module.exports = router;
+routerProdutos.post('/produtos', produtoController.listarProdutos);
+routerProdutos.get('/produtos', produtoController.inserirProduto);
+routerProdutos.get('/produtos/:id', produtoController.buscarProdutoPorId);
+routerProdutos.put('/produtos/:id', produtoController.atualizarProduto);
+routerProdutos.delete('/produtos/:id', produtoController.deletarProduto);
+
+module.exports = routerProdutos;
