@@ -20,3 +20,4 @@ app.use('/api', categoriasRouter);
 
 // Exporta o aplicativo configurado para ser ligado pelo arquivo centralizador server.js
 module.exports = app;
+ 
