@@ -1,59 +1,56 @@
 /*Este arquivo intercepta requisições HTTP, extrai dados do body/params
 e delega ao Service, retornando respostas JSON com tratamento de erros.*/
 
-const clienteService = require('../service/cliente_service');
+const produtoService = require('../service/produto_service');
 
-class ClienteController {
+// LISTAR PRODUTOS
+async function listarProdutos(req, res) {
+    res.json(await produtoService.listar());
+}
 
-    // CLIENTES
-
-    // CREATE
-    async createCliente(req, res) {
-        try {
-            const resultado = await clienteService.createCliente(req.body);
-            res.status(201).json(resultado);
-
-        } catch (e) {
-            res.status(400).json({ erro: e.message });
-        }
+//INSERIR PRODUTO
+async function inserirProduto(req, res) {
+    let produto = req.body;
+    try { 
+        produto = await produtoService.inserir(produto);
+        res.status(201).json(produto);
     }
-
-    // READ
-    async getClientes(req, res) {
-        try {
-            const resultado = await clienteService.getClientes();
-            res.json(resultado);
-
-        } catch (e) {
-            res.status(500).json({ erro: "Erro ao buscar clientes." });
-        }
-    }
-
-    // UPDATE
-    async updateCliente(req, res) {
-        try {
-            const resultado = await clienteService.updateCliente(
-                req.params.cpf,
-                req.body
-            );
-
-            res.json(resultado);
-
-        } catch (e) {
-            res.status(400).json({ erro: e.message });
-        }
-    }
-
-    // DELETE
-    async deleteCliente(req, res) {
-        try {
-            const resultado = await clienteService.deleteCliente(req.params.cpf);
-            res.json(resultado);
-
-        } catch (e) {
-            res.status(400).json({ erro: e.message });
-        }
+    catch(err) {
+        res.status(err.id).json(err);
     }
 }
 
-module.exports = new ClienteController();
+//BUSCAR PRODUTO POR ID
+async function buscarProdutoPorId(req, res) {    
+    const id = +req.params.id;
+    try {
+        res.json(await produtoService.buscarProdutoPorId(id));
+    } catch(err) {
+        res.status(err.id).json(err);
+    }
+}
+
+//ATUALIZAR PRODUTO
+async function atualizarProduto(req, res) {
+    const id = +req.params.id;
+    let produto = req.body;
+    try{
+        res.json(await produtoService.atualizarProduto(id, produto));
+    } catch(err) {
+        res.status(err.id).json(err);
+    }
+}
+
+//DELETAR PRODUTO
+async function deletarProduto(req, res) {
+    const id = +req.params.id;
+    try {
+        res.json(await produtoService.deletarProduto    (id));
+    } catch(err) {
+        res.status(err.id).json(err);
+    }
+}
+
+module.exports = {
+    listarProdutos, inserirProduto, buscarProdutoPorId, atualizarProduto, deletarProduto
+}
