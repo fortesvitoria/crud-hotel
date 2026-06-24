@@ -6,7 +6,7 @@ const clienteRouter = require('./router/cliente_router');
 
 const produtoRouter = require('./router/produto_router');
 
-const categoriasRouter = require('./router/categoria_produto_router');
+const categoriasRouter = require('./router/categoria_router');
 
 const app = express();
 

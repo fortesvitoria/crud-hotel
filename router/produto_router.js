@@ -5,9 +5,7 @@ const produtoController = require('../controller/produto_controller');
 
 // ROTAS PARA PRODUTOS
 
-// Listar produtos
 routerProdutos.get('/produtos', produtoController.listarProdutos);
-// Inserir produto
 routerProdutos.post('/produtos', produtoController.inserirProduto);
 routerProdutos.get('/produtos/:id', produtoController.buscarProdutoPorId);
 routerProdutos.put('/produtos/:id', produtoController.atualizarProduto);

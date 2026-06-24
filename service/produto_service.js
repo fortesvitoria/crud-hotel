@@ -10,7 +10,6 @@ async function listar() {
 
 //INSERIR PRODUTO
 async function inserirProduto(produto) {
-    // Validação detalhada conforme esquema da tabela produtos
     if (!produto || Object.keys(produto).length === 0) {
         throw { status: 400, message: 'Produto vazio' };
     }
