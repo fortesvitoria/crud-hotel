@@ -3,7 +3,7 @@ utilizando PostgreSQL, focado exclusivamente no CRUD de CLIENTES.*/
 
 const pool = require('../database');
 
-class HotelRepository {
+class ClienteRepository {
 
   
   //CRUD CLIENTES
@@ -58,4 +58,4 @@ class HotelRepository {
     }
 }
 
-module.exports = new HotelRepository();
+module.exports = new ClienteRepository();

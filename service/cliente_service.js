@@ -1,9 +1,9 @@
 /* Este arquivo centraliza a inteligência do sistema,
 validando regras de negócio para CLIENTES. */
 
-const hotelRepository = require('../repository/cliente_repository');
+const clienteRepository = require('../repository/cliente_repository');
 
-class HotelService {
+class ClienteService {
 
     // =========================
     // ✅ CRUD CLIENTES
@@ -57,7 +57,7 @@ async createCliente(dados) {
     // =========================
     // 🔹 CPF DUPLICADO
     // =========================
-    const existente = await hotelRepository.findClienteByCpf(cpf);
+    const existente = await clienteRepository.findClienteByCpf(cpf);
     if (existente) {
         throw new Error("Cliente já cadastrado.");
     }
@@ -65,7 +65,7 @@ async createCliente(dados) {
     // =========================
     // 🔹 SALVAR
     // =========================
-    return await hotelRepository.saveCliente({
+    return await clienteRepository.saveCliente({
         nome,
         cpf,
         telefone,
@@ -75,7 +75,7 @@ async createCliente(dados) {
 
     // Listagem
     async getClientes() {
-        return await hotelRepository.findAllClientes();
+        return await clienteRepository.findAllClientes();
     }
 
     // Atualização
@@ -83,7 +83,7 @@ async createCliente(dados) {
 async updateCliente(cpf, dados) {
 
     // 🔹 Busca cliente atual
-    const cliente = await hotelRepository.findClienteByCpf(cpf);
+    const cliente = await clienteRepository.findClienteByCpf(cpf);
     if (!cliente) {
         throw new Error("Cliente não encontrado.");
     }
@@ -104,7 +104,7 @@ async updateCliente(cpf, dados) {
     }
 
     // 🔹 Executa update com valores completos
-    return await hotelRepository.updateCliente(cpf, {
+    return await clienteRepository.updateCliente(cpf, {
         nome,
         telefone,
         email
@@ -114,15 +114,15 @@ async updateCliente(cpf, dados) {
     // Remoção
     async deleteCliente(cpf) {
 
-        const cliente = await hotelRepository.findClienteByCpf(cpf);
+        const cliente = await clienteRepository.findClienteByCpf(cpf);
         if (!cliente) {
             throw new Error("Cliente não encontrado.");
         }
 
-        await hotelRepository.deleteCliente(cpf);
+        await clienteRepository.deleteCliente(cpf);
 
         return { msg: "Cliente removido com sucesso." };
     }
 }
 
-module.exports = new HotelService();
+module.exports = new ClienteService();

@@ -1,16 +1,16 @@
 /*Este arquivo intercepta requisições HTTP, extrai dados do body/params
 e delega ao Service, retornando respostas JSON com tratamento de erros.*/
 
-const hotelService = require('../service/cliente_service');
+const clienteService = require('../service/cliente_service');
 
-class HotelController {
+class ClienteController {
 
     // CLIENTES
 
     // CREATE
     async createCliente(req, res) {
         try {
-            const resultado = await hotelService.createCliente(req.body);
+            const resultado = await clienteService.createCliente(req.body);
             res.status(201).json(resultado);
 
         } catch (e) {
@@ -21,7 +21,7 @@ class HotelController {
     // READ
     async getClientes(req, res) {
         try {
-            const resultado = await hotelService.getClientes();
+            const resultado = await clienteService.getClientes();
             res.json(resultado);
 
         } catch (e) {
@@ -32,7 +32,7 @@ class HotelController {
     // UPDATE
     async updateCliente(req, res) {
         try {
-            const resultado = await hotelService.updateCliente(
+            const resultado = await clienteService.updateCliente(
                 req.params.cpf,
                 req.body
             );
@@ -47,7 +47,7 @@ class HotelController {
     // DELETE
     async deleteCliente(req, res) {
         try {
-            const resultado = await hotelService.deleteCliente(req.params.cpf);
+            const resultado = await clienteService.deleteCliente(req.params.cpf);
             res.json(resultado);
 
         } catch (e) {
@@ -56,4 +56,4 @@ class HotelController {
     }
 }
 
-module.exports = new HotelController();
+module.exports = new ClienteController();
