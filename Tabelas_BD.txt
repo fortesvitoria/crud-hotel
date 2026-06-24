@@ -2,47 +2,39 @@ PgAdmin4
 
 hotel_bd
 
--- =========================
--- ✅ CLIENTES
--- =========================
+CRIANDO TABELAS:
+
+------------ CLIENTES
 CREATE TABLE clientes (
-    cpf VARCHAR PRIMARY KEY,
-    nome TEXT NOT NULL,
-    telefone TEXT NOT NULL,
-    email TEXT NOT NULL
+    cpf CHAR(11) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(15) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
--- =========================
--- ✅ TIPOS DE QUARTO
--- =========================
+------------- TIPOS QUARTO
 CREATE TABLE tipos_quarto (
     id SERIAL PRIMARY KEY,
-    nome TEXT UNIQUE NOT NULL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     capacidade INT NOT NULL
 );
 
--- =========================
--- ✅ QUARTOS
--- =========================
+------------- QUARTOS
 CREATE TABLE quartos (
     numero INT PRIMARY KEY,
-    tipo TEXT NOT NULL,
-    valor_diaria NUMERIC NOT NULL,
-    status TEXT DEFAULT 'disponível'
+    id_tipo INTEGER NOT NULL REFERENCES tipos_quarto(id),
+    valor_diaria NUMERIC(10,2) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'disponivel'
 );
 
--- =========================
--- ✅ CATEGORIAS
--- =========================
+------------- CATEGORIAS PRODUTOS
 CREATE TABLE categorias (
-    id SERIAL PRIMARY KEY,
-    nome TEXT NOT NULL,
-    descricao TEXT NOT NULL
+    id INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255)
 );
 
--- =========================
--- ✅ PRODUTOS
--- =========================
+------------- PRODUTOS
 CREATE TABLE produtos (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
@@ -50,39 +42,65 @@ CREATE TABLE produtos (
   preco_unitario NUMERIC(10,2) NOT NULL
 );
 
--- =========================
--- ✅ RESERVAS
--- =========================
+------------- RESERVAS
 CREATE TABLE reservas (
     id SERIAL PRIMARY KEY,
-    cpf_cliente TEXT NOT NULL,
-    numero_quarto INT NOT NULL,
+    cpf_cliente CHAR(11) NOT NULL REFERENCES clientes(cpf),
+    numero_quarto INT NOT NULL REFERENCES quartos(numero),
     qtd_pessoas INT NOT NULL,
     data_entrada DATE NOT NULL,
     data_saida DATE NOT NULL,
-    data_criacao TIMESTAMP DEFAULT NOW()
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================
--- ✅ ESTADIAS
--- =========================
+------------- ESTADIAS
 CREATE TABLE estadias (
     id SERIAL PRIMARY KEY,
     data_entrada TIMESTAMP NOT NULL,
     data_saida TIMESTAMP,
-    numero_quarto INT NOT NULL,
-    valor_diaria NUMERIC NOT NULL,
-    cpf_cliente TEXT NOT NULL,
-    status TEXT DEFAULT 'ativa',
-    valor_total NUMERIC DEFAULT 0
+    numero_quarto INT NOT NULL REFERENCES quartos(numero),
+    valor_diaria NUMERIC(10,2) NOT NULL,
+    cpf_cliente CHAR(11) NOT NULL REFERENCES clientes(cpf),
+    status VARCHAR(20) NOT NULL DEFAULT 'ativa',
+    valor_total NUMERIC(10,2) NOT NULL DEFAULT 0
 );
 
--- =========================
--- ✅ CONSUMO (RN3)
--- =========================
+
+------------- CONSUMOS
 CREATE TABLE consumos (
     id SERIAL PRIMARY KEY,
-    id_estadia INT NOT NULL,
-    id_produto INT NOT NULL,
+    id_estadia INT NOT NULL REFERENCES estadias(id),
+    id_produto INT NOT NULL REFERENCES produtos(id),
     quantidade INT NOT NULL
 );
+
+*****************************
+
+ISERTS PARA TESTE:
+
+------------- CLIENTES
+INSERT INTO clientes (cpf, nome, telefone, email) VALUES 
+('02009564002', 'Maria Silva', '51 999554477', 'maria@email.com'),
+('06865935000', 'Joao Ferreira', '54 33339999', 'joao@email.com');
+
+------------- CATEGORIAS PRODUTOS:
+INSERT INTO categorias (id, nome, descricao) VALUES 
+(1, 'Bebidas não alcoólicas', 'Bebidas sem teor alcoólico'),
+(2, 'Bebidas Alcoólicas', 'Bebidas com alcoól'),
+(3, 'Alimentos', 'Alimentos variados');
+
+------------- PRODUTOS:
+INSERT INTO produtos (nome, categoria, preco_unitario) VALUES 
+('Água com gás', 1, 6.90), 
+('Coca-Cola', 1, 8.90),
+('Suco de Laranja', 1, 12.90),
+('Cerveja Heineken Longneck', 2, 16.00), 
+('Cerveja Corona Longneck', 2, 16.00), 
+('Vinho Tinto Seco 600ml', 2, 76.90),
+('Amendoim Salgado', 3, 12.00), 
+('Batata Chips', 3, 14.00), 
+('Cookies pacote', 3, 12.00);
+
+-- Consultas
+SELECT * FROM produtos;
+SELECT * FROM categorias;
