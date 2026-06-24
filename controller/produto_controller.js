@@ -16,8 +16,13 @@ async function inserirProduto(req, res) {
         res.status(201).json(produto);
     }
     catch(err) {
-        res.status(err.id).json(err);
+        const status = (err && Number.isInteger(err.status)) ? err.status
+            : (err && Number.isInteger(err.statusCode)) ? err.statusCode
+            : 500;
+        const payload = (err && err.message) ? { error: err.message } : err || { error: 'Internal Server Error' };
+        res.status(status).json(payload);
     }
+    console.log(req.body) 
 }
 
 //BUSCAR PRODUTO POR ID
@@ -26,7 +31,11 @@ async function buscarProdutoPorId(req, res) {
     try {
         res.json(await produtoService.buscarProdutoPorId(id));
     } catch(err) {
-        res.status(err.id).json(err);
+        const status = (err && Number.isInteger(err.status)) ? err.status
+            : (err && Number.isInteger(err.statusCode)) ? err.statusCode
+            : 500;
+        const payload = (err && err.message) ? { error: err.message } : err || { error: 'Internal Server Error' };
+        res.status(status).json(payload);
     }
 }
 
@@ -37,7 +46,11 @@ async function atualizarProduto(req, res) {
     try{
         res.json(await produtoService.atualizarProduto(id, produto));
     } catch(err) {
-        res.status(err.id).json(err);
+        const status = (err && Number.isInteger(err.status)) ? err.status
+            : (err && Number.isInteger(err.statusCode)) ? err.statusCode
+            : 500;
+        const payload = (err && err.message) ? { error: err.message } : err || { error: 'Internal Server Error' };
+        res.status(status).json(payload);
     }
 }
 
@@ -47,7 +60,11 @@ async function deletarProduto(req, res) {
     try {
         res.json(await produtoService.deletarProduto    (id));
     } catch(err) {
-        res.status(err.id).json(err);
+        const status = (err && Number.isInteger(err.status)) ? err.status
+            : (err && Number.isInteger(err.statusCode)) ? err.statusCode
+            : 500;
+        const payload = (err && err.message) ? { error: err.message } : err || { error: 'Internal Server Error' };
+        res.status(status).json(payload);
     }
 }
 

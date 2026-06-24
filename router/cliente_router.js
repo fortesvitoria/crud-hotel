@@ -9,4 +9,4 @@ routerClientes.get('/clientes', clienteController.getClientes);
 routerClientes.put('/clientes/:cpf', clienteController.updateCliente);
 routerClientes.delete('/clientes/:cpf', clienteController.deleteCliente);
 
-module.exports = router;
+module.exports = routerClientes;

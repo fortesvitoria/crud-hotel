@@ -10,14 +10,41 @@ async function listar() {
 
 //INSERIR PRODUTO
 async function inserirProduto(produto) {
-    //Validar se produto tem nomen categoria e preço
-    if(produto && produto.nome && produto.categoria && produto.preco_unitario) {
-        return await produtoRepository.inserirProduto(produto);
+    // Validação detalhada conforme esquema da tabela produtos
+    if (!produto || Object.keys(produto).length === 0) {
+        throw { status: 400, message: 'Produto vazio' };
     }
-    else {
-        //Erro
-        throw { id: 400, msg: "Produto sem dados corretos"};
+
+    const errors = [];
+
+    // nome: string não vazio
+    if (!produto.nome || typeof produto.nome !== 'string' || produto.nome.trim() === '') {
+        errors.push('nome');
     }
+
+    // categoria: inteiro
+    if (produto.categoria === undefined || produto.categoria === null || produto.categoria === '') {
+        errors.push('categoria');
+    } else {
+        const cat = Number.parseInt(produto.categoria, 10);
+        if (Number.isNaN(cat)) errors.push('categoria (deve ser inteiro)');
+        else produto.categoria = cat;
+    }
+
+    // preco_unitario: número
+    if (produto.preco_unitario === undefined || produto.preco_unitario === null || produto.preco_unitario === '') {
+        errors.push('preco_unitario');
+    } else {
+        const preco = Number.parseFloat(produto.preco_unitario);
+        if (Number.isNaN(preco)) errors.push('preco_unitario (deve ser número)');
+        else produto.preco_unitario = preco;
+    }
+
+    if (errors.length > 0) {
+        throw { status: 400, message: `Campos inválidos ou ausentes: ${errors.join(', ')}` };
+    }
+
+    return await produtoRepository.inserirProduto(produto);
 
 
 }
@@ -29,7 +56,7 @@ async function buscarProdutoPorId(id) {
         return produto;
     }
     else {
-        throw { id: 404, msg: "Produto não encontrado!"};
+        throw { status: 404, message: "Produto não encontrado!" };
     }
 }
 
@@ -41,11 +68,11 @@ async function atualizarProduto(id, produto) {
             return produtoAtualizado;
         }        
         else {
-            throw {id:404, msg: "Produto não encontrado"};
+            throw { status: 404, message: "Produto não encontrado" };
         }
     }
     else {
-        throw {id:400, msg: "Produto sem dados corretos"};
+        throw { status: 400, message: "Produto sem dados corretos" };
     }
 }
 
@@ -56,12 +83,13 @@ async function deletarProduto(id) {
         return produto;
     }
     else {
-        throw { id: 404, msg: "Produto não encontrado!" }
+        throw { status: 404, message: "Produto não encontrado!" };
     }
 }
 
 module.exports = {
     listar,
+    inserir: inserirProduto,
     inserirProduto,
     buscarProdutoPorId,
     atualizarProduto,
