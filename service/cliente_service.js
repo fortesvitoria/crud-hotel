@@ -1,7 +1,7 @@
 /* Este arquivo centraliza a inteligência do sistema,
 validando regras de negócio para CLIENTES. */
 
-const hotelRepository = require('../repository/hotel_repository');
+const hotelRepository = require('../repository/cliente_repository');
 
 class HotelService {
 

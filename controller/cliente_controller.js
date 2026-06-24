@@ -1,7 +1,7 @@
 /*Este arquivo intercepta requisições HTTP, extrai dados do body/params
 e delega ao Service, retornando respostas JSON com tratamento de erros.*/
 
-const hotelService = require('../service/hotel_service');
+const hotelService = require('../service/cliente_service');
 
 class HotelController {
 
