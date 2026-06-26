@@ -3,59 +3,113 @@ utilizando PostgreSQL, focado exclusivamente no CRUD de CLIENTES.*/
 
 const pool = require('../database');
 
-class ClienteRepository {
+// LISTAR CLIENTES
+async function listarClientes() {
+    const client = await pool.connect();
+    try {
+        const sql = `
+            SELECT cpf, nome, telefone, email
+            FROM clientes
+            ORDER BY nome
+        `;
 
-  
-  //CRUD CLIENTES
-  
-    // Insere um novo cliente no banco
-    async saveCliente(dados) {
-        const result = await pool.query(
-            `INSERT INTO clientes (cpf, nome, telefone, email)
-             VALUES ($1, $2, $3, $4)
-             RETURNING *`,
-            [dados.cpf, dados.nome, dados.telefone, dados.email]
-        );
-
-        return result.rows[0];
-    }
-
-    // Lista todos os clientes
-    async findAllClientes() {
-        const result = await pool.query('SELECT * FROM clientes');
+        const result = await client.query(sql);
         return result.rows;
-    }
-
-    // Busca cliente por CPF
-    async findClienteByCpf(cpf) {
-        const result = await pool.query(
-            'SELECT * FROM clientes WHERE cpf = $1',
-            [cpf]
-        );
-
-        return result.rows[0];
-    }
-
-    // Atualiza cliente
-    async updateCliente(cpf, dados) {
-        const result = await pool.query(
-            `UPDATE clientes
-             SET nome = $1, telefone = $2, email = $3
-             WHERE cpf = $4
-             RETURNING *`,
-            [dados.nome, dados.telefone, dados.email, cpf]
-        );
-
-        return result.rows[0];
-    }
-
-    // Remove cliente
-    async deleteCliente(cpf) {
-        await pool.query(
-            'DELETE FROM clientes WHERE cpf = $1',
-            [cpf]
-        );
+    } finally {
+        client.release();
     }
 }
 
-module.exports = new ClienteRepository();
+// INSERIR CLIENTE
+ 
+async function inserirCliente(cliente) {
+    const client = await pool.connect();
+    try {
+        const sql = `
+            INSERT INTO clientes (cpf, nome, telefone, email)
+            VALUES ($1, $2, $3, $4)
+            RETURNING *
+        `;
+
+        const values = [
+            cliente.cpf,
+            cliente.nome,
+            cliente.telefone,
+            cliente.email
+        ];
+
+        const result = await client.query(sql, values);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+}
+
+// BUSCAR CLIENTE POR CPF
+async function buscarClientePorId(cpf) {
+    const client = await pool.connect();
+    try {
+        const sql = `
+            SELECT cpf, nome, telefone, email
+            FROM clientes
+            WHERE cpf = $1
+        `;
+
+        const result = await client.query(sql, [cpf]);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+}
+
+// ATUALIZAR CLIENTE
+async function atualizarCliente(cpf, cliente) {
+    const client = await pool.connect();
+    try {
+        const sql = `
+            UPDATE clientes
+            SET nome = $1,
+                telefone = $2,
+                email = $3
+            WHERE cpf = $4
+            RETURNING *
+        `;
+
+        const values = [
+            cliente.nome,
+            cliente.telefone,
+            cliente.email,
+            cpf
+        ];
+
+        const result = await client.query(sql, values);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+}
+
+// DELETAR CLIENTE
+async function deletarCliente(cpf) {
+    const client = await pool.connect();
+    try {
+        const sql = `
+            DELETE FROM clientes
+            WHERE cpf = $1
+            RETURNING *
+        `;
+
+        const result = await client.query(sql, [cpf]);
+        return result.rows[0];
+    } finally {
+        client.release();
+    }
+}
+
+module.exports = {
+    listarClientes,
+    inserirCliente,
+    buscarClientePorId,
+    atualizarCliente,
+    deletarCliente
+};

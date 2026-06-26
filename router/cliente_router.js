@@ -2,11 +2,12 @@ const express = require('express');
 const routerClientes = express.Router();
 const clienteController = require('../controller/cliente_controller');
 
-//  CLIENTES
+// ROTAS PARA CLIENTES
 
-routerClientes.post('/clientes', clienteController.createCliente);
-routerClientes.get('/clientes', clienteController.getClientes);
-routerClientes.put('/clientes/:cpf', clienteController.updateCliente);
-routerClientes.delete('/clientes/:cpf', clienteController.deleteCliente);
+routerClientes.get('/clientes', clienteController.listarClientes);
+routerClientes.post('/clientes', clienteController.inserirCliente);
+routerClientes.get('/clientes/:cpf', clienteController.buscarClientePorId);
+routerClientes.put('/clientes/:cpf', clienteController.atualizarCliente);
+routerClientes.delete('/clientes/:cpf', clienteController.deletarCliente);
 
 module.exports = routerClientes;
