@@ -8,6 +8,9 @@ const produtoRouter = require('./router/produto_router');
 
 const categoriasRouter = require('./router/categoria_router');
 
+const tipoQuartoRouter = require('./router/tipo_quarto_router');
+const quartoRouter = require('./router/quarto_router');
+
 const app = express();
 
 // Middleware obrigatório para permitir o recebimento e leitura de corpos de requisição em formato JSON
@@ -17,6 +20,8 @@ app.use(express.json());
 app.use('/api', clienteRouter);
 app.use('/api', produtoRouter);
 app.use('/api', categoriasRouter);
+app.use('/tipos-quarto', tipoQuartoRouter);
+app.use('/quartos', quartoRouter);
 
 // Exporta o aplicativo configurado para ser ligado pelo arquivo centralizador server.js
 module.exports = app;
