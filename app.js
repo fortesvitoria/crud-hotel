@@ -3,13 +3,11 @@ injetando o decodificador JSON nativo e amarrando o arquivo de rotas globais.*/
 
 const express = require('express');
 const clienteRouter = require('./router/cliente_router');
-
 const produtoRouter = require('./router/produto_router');
-
 const categoriasRouter = require('./router/categoria_router');
-
 const tipoQuartoRouter = require('./router/tipo_quarto_router');
 const quartoRouter = require('./router/quarto_router');
+const reservaQuartoRouter = require('./router/reserva_quarto_router');
 
 const app = express();
 
@@ -20,8 +18,9 @@ app.use(express.json());
 app.use('/api', clienteRouter);
 app.use('/api', produtoRouter);
 app.use('/api', categoriasRouter);
-app.use('/tipos-quarto', tipoQuartoRouter);
-app.use('/quartos', quartoRouter);
+app.use('/api', tipoQuartoRouter);
+app.use('/api', quartoRouter);
+app.use('/api', reservaQuartoRouter);
 
 // Exporta o aplicativo configurado para ser ligado pelo arquivo centralizador server.js
 module.exports = app;

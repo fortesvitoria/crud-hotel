@@ -69,5 +69,9 @@ async function deletarProduto(req, res) {
 }
 
 module.exports = {
-    listarProdutos, inserirProduto, buscarProdutoPorId, atualizarProduto, deletarProduto
+    listarProdutos, 
+    inserirProduto, 
+    buscarProdutoPorId, 
+    atualizarProduto, 
+    deletarProduto
 }

@@ -14,7 +14,7 @@ CREATE TABLE clientes (
 
 ------------- TIPOS QUARTO
 CREATE TABLE tipos_quarto (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE,
     capacidade INT NOT NULL
 );
@@ -45,7 +45,7 @@ CREATE TABLE produtos (
 ------------- RESERVAS
 CREATE TABLE reservas (
     id SERIAL PRIMARY KEY,
-    cpf_cliente CHAR(11) NOT NULL REFERENCES clientes(cpf),
+    cpf_cliente VARCHAR(11) NOT NULL REFERENCES clientes(cpf),
     numero_quarto INT NOT NULL REFERENCES quartos(numero),
     qtd_pessoas INT NOT NULL,
     data_entrada DATE NOT NULL,
@@ -74,14 +74,15 @@ CREATE TABLE consumos (
     quantidade INT NOT NULL
 );
 
+
 *****************************
 
 INSERTS PARA TESTE:
 
 ------------- CLIENTES
 INSERT INTO clientes (cpf, nome, telefone, email) VALUES 
-('02009564002', 'Maria Silva', '51 999554477', 'maria@email.com'),
-('06865935000', 'Joao Ferreira', '54 33339999', 'joao@email.com');
+('02009564002', 'Maria Silva', '51999554477', 'maria@email.com'),
+('06865935000', 'Joao Ferreira', '5433339999', 'joao@email.com');
 
 ------------- CATEGORIAS PRODUTOS:
 INSERT INTO categorias (id, nome, descricao) VALUES 
@@ -101,6 +102,23 @@ INSERT INTO produtos (nome, categoria, preco_unitario) VALUES
 ('Batata Chips', 3, 14.00), 
 ('Cookies pacote', 3, 12.00);
 
+------------- TIPOS QUARTO:
+INSERT INTO tipos_quarto (id, nome, capacidade) VALUES 
+(1, 'simples', 1),
+(2, 'duplo', 2),
+(3, 'suite', 4); 
+
+------------- QUARTOS:
+INSERT INTO quartos (numero, id_tipo, valor_diaria, status) VALUES 
+(101, 1, 150.00, 'disponivel'),
+(501, 2, 350.00, 'disponivel'),
+(801, 3, 650.00, 'disponivel');
+
+
 -- Consultas
+SELECT * FROM clientes;
 SELECT * FROM produtos;
 SELECT * FROM categorias;
+SELECT * FROM quartos;
+SELECT * FROM tipos_quarto;
+SELECT * FROM reservas;

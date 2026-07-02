@@ -17,6 +17,8 @@ async function listarProdutos() {
         `;
 
         const result = await client.query(sql);
+        
+        //transforma os dados do banco em um objeto json
         const listaProdutos = result.rows.map(p => ({
             id: p.id,
             nome: p.nome,
