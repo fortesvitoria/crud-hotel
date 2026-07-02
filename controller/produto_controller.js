@@ -5,7 +5,7 @@ const produtoService = require('../service/produto_service');
 
 // LISTAR PRODUTOS
 async function listarProdutos(req, res) {
-    res.json(await produtoService.listar());
+    res.json(await produtoService.listarProdutos());
 }
 
 //INSERIR PRODUTO

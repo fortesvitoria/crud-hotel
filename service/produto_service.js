@@ -4,7 +4,7 @@ validando regras de negócio para PRODUTOS. */
 const produtoRepository = require('../repository/produto_repository');
 
 
-async function listar() {
+async function listarProdutos() {
     return await produtoRepository.listarProdutos();
 }
 
@@ -87,8 +87,8 @@ async function deletarProduto(id) {
 }
 
 module.exports = {
-    listar,
-    inserir: inserirProduto,
+    listarProdutos,
+    inserirProduto,
     inserirProduto,
     buscarProdutoPorId,
     atualizarProduto,
