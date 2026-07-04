@@ -29,8 +29,10 @@ async function listarTiposQuarto() {
 async function criarTipoQuarto(tipoQuarto) {
     const client = await pool.connect();
     try {
-        const sql = "INSERT INTO tipos_quarto(nome, capacidade) VALUES ($1, $2) RETURNING *";
-        const values = [tipoQuarto.nome, tipoQuarto.capacidade];
+        // Adicionamos o id na instrução SQL e o $3
+        const sql = "INSERT INTO tipos_quarto(id, nome, capacidade) VALUES ($1, $2, $3) RETURNING *";
+        // Adicionamos o tipoQuarto.id na lista de valores
+        const values = [tipoQuarto.id, tipoQuarto.nome, tipoQuarto.capacidade];
         const result = await client.query(sql, values);
         return result.rows[0];
     } finally {
