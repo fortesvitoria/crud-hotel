@@ -122,3 +122,129 @@ SELECT * FROM categorias;
 SELECT * FROM quartos;
 SELECT * FROM tipos_quarto;
 SELECT * FROM reservas;
+
+
+//////////////////////////////////////////completo///////////////////////////////////////
+
+-- =========================================================================
+-- 1. CADASTRO DE BASE (Tipos de Quarto, Quartos e Categorias)
+-- =========================================================================
+INSERT INTO tipos_quarto (id, nome, capacidade) VALUES
+(1, 'Individual', 1),
+(2, 'Duplo Standard', 2),
+(3, 'Suite Master', 4)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO quartos (numero, id_tipo, valor_diaria, status) VALUES
+(101, 1, 150.00, 'disponivel'),
+(102, 1, 180.00, 'disponivel'),
+(105, 2, 150.00, 'disponivel'),
+(202, 2, 180.00, 'disponivel'),
+(204, 2, 200.00, 'disponivel'),
+(301, 3, 300.00, 'disponivel'),
+(305, 3, 250.00, 'disponivel'),
+(404, 2, 220.00, 'disponivel'),
+(501, 3, 400.00, 'disponivel')
+ON CONFLICT (numero) DO NOTHING;
+
+INSERT INTO categorias (id, nome, descricao) VALUES
+(10, 'Bebidas', 'Bebidas em geral do frigobar'),
+(20, 'Petiscos', 'Salgados e snacks'),
+(30, 'Doces', 'Chocolates e guloseimas')
+ON CONFLICT (id) DO NOTHING;
+
+-- =========================================================================
+-- 2. CADASTRO DE CLIENTES
+-- =========================================================================
+INSERT INTO clientes (cpf, nome, email, telefone) VALUES
+('12345678901', 'Ana Silva', 'ana.silva@email.com', '11999998888'),
+('98765432100', 'Carlos Souza', 'carlos.souza@email.com', '21988887777'),
+('45678912344', 'Julia Santos', 'julia.santos@email.com', '51977776666'),
+('11122233344', 'Roberto Almeida', 'roberto.almeida@email.com', '11977771111'),
+('55566677788', 'Mariana Costa', 'mariana.costa@email.com', '21977772222'),
+('99988877766', 'Ricardo Oliveira', 'ricardo.oliveira@email.com', '31977773333'),
+('22233344455', 'Beatriz Lima', 'beatriz.lima@email.com', '41977774444'),
+('77788899900', 'Fernando Mendes', 'fernando.mendes@email.com', '81977775555')
+ON CONFLICT (cpf) DO NOTHING;
+
+-- =========================================================================
+-- 3. CADASTRO DE PRODUTOS (Respeitando a coluna SERIAL sem forçar o ID)
+-- Reposiciona a sequência do SERIAL para evitar erros futuros
+-- =========================================================================
+ALTER SEQUENCE produtos_id_seq RESTART WITH 1;
+
+INSERT INTO produtos (nome, categoria, preco_unitario) VALUES
+('Água Mineral 500ml', 10, 5.00),        -- Irá gerar ID 1 automático
+('Cerveja Lata', 10, 8.50),               -- Irá gerar ID 2 automático
+('Refrigerante Lata', 10, 6.00),          -- Irá gerar ID 3 automático
+('Batata Pringles', 20, 14.90),           -- Irá gerar ID 4 automático
+('Chocolate Barra', 30, 7.00),            -- Irá gerar ID 5 automático
+('Vinho Tinto Garrafa', 10, 85.00),       -- Irá gerar ID 6 automático
+('Amendoim Pacote', 20, 6.50),            -- Irá gerar ID 7 automático
+('Suco de Laranja Integral', 10, 9.00),   -- Irá gerar ID 8 automático
+('Kit Kat Barra', 30, 4.50),              -- Irá gerar ID 9 automático
+('Energético Lata', 10, 12.00);           -- Irá gerar ID 10 automático
+
+-- =========================================================================
+-- 4. CADASTRO DE ESTADIAS (Gera IDs sequenciais de 1 a 9 automaticamente)
+-- =========================================================================
+ALTER SEQUENCE estadias_id_seq RESTART WITH 1;
+
+INSERT INTO estadias (data_entrada, data_saida, numero_quarto, valor_diaria, cpf_cliente, status, valor_total) VALUES
+-- Estadias da Ana Silva (Julho/2026) -> Gerará IDs 1 e 2
+('2026-07-01 14:00:00', '2026-07-05 12:00:00', 101, 150.00, '12345678901', 'Finalizada', 600.00),
+('2026-07-10 14:00:00', '2026-07-12 12:00:00', 102, 180.00, '12345678901', 'Finalizada', 360.00),
+
+-- Estadia do Carlos (Maio/2026) -> Gerará ID 3
+('2026-05-15 14:00:00', '2026-05-20 12:00:00', 204, 200.00, '98765432100', 'Finalizada', 1000.00),
+
+-- Estadia da Julia (Julho/2026) -> Gerará ID 4
+('2026-07-02 14:00:00', '2026-07-04 12:00:00', 305, 250.00, '45678912344', 'Finalizada', 500.00),
+
+-- Estadias do Roberto Almeida (Múltiplas em Julho e Agosto de 2026) -> Gerará IDs 5, 6 e 7
+('2026-07-01 12:00:00', '2026-07-03 12:00:00', 105, 150.00, '11122233344', 'Finalizada', 300.00),
+('2026-07-15 14:00:00', '2026-07-18 12:00:00', 105, 150.00, '11122233344', 'Finalizada', 450.00),
+('2026-08-10 14:00:00', '2026-08-12 12:00:00', 202, 180.00, '11122233344', 'Finalizada', 360.00),
+
+-- Estadia da Mariana Costa (Agosto/2026) -> Gerará ID 8
+('2026-08-01 14:00:00', '2026-08-10 12:00:00', 301, 300.00, '55566677788', 'Finalizada', 2700.00),
+
+-- Estadia antiga do Ricardo (Julho/2025 - Ano diferente) -> Gerará ID 9
+('2025-07-10 14:00:00', '2025-07-15 12:00:00', 102, 140.00, '99988877766', 'Finalizada', 700.00),
+
+-- Estadia da Beatriz (Janeiro/2026 - Sem consumo) -> Gerará ID 10
+('2026-01-05 14:00:00', '2026-01-10 12:00:00', 404, 220.00, '22233344455', 'Finalizada', 1100.00),
+
+-- Estadia ativa do Fernando Mendes (Julho/2026 - Sem consumo) -> Gerará ID 11
+('2026-07-04 14:00:00', null, 501, 400.00, '77788899900', 'ativa', 0.00);
+
+-- =========================================================================
+-- 5. CADASTRO DE CONSUMOS (Apontando para os IDs gerados de produtos e estadias)
+-- =========================================================================
+INSERT INTO consumos (id_estadia, id_produto, quantidade) VALUES
+-- Consumos vinculados à Estadia ID 1 (Ana Silva)
+(1, 1, 3), -- 3 Águas Minerais
+(1, 3, 2), -- 2 Refrigerantes
+
+-- Consumos vinculados à Estadia ID 4 (Julia Santos)
+(4, 1, 2), -- 2 Águas Minerais
+(4, 2, 4), -- 4 Cervejas
+(4, 4, 1), -- 1 Batata Pringles
+
+-- Consumos vinculados à Estadia ID 5 (Roberto Almeida - Estadia 1)
+(5, 1, 4), -- 4 Águas Minerais
+(5, 7, 2), -- 2 Amendoins
+(5, 9, 3), -- 3 Kit Kats
+
+-- Consumos vinculados à Estadia ID 6 (Roberto Almeida - Estadia 2)
+(6, 2, 6),  -- 6 Cervejas
+(6, 10, 2), -- 2 Energéticos
+
+-- Consumos pesados vinculados à Estadia ID 8 (Mariana Costa)
+(8, 6, 2), -- 2 Vinhos Tintos
+(8, 4, 3), -- 3 Batatas Pringles
+(8, 8, 4), -- 4 Sucos de Laranja
+
+-- Consumos vinculados à Estadia ID 9 (Ricardo Oliveira - Registro de 2025)
+(9, 3, 5), -- 5 Refrigerantes
+(9, 7, 1); -- 1 Amendoim

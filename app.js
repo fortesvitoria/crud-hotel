@@ -10,6 +10,8 @@ const quartoRouter = require('./router/quarto_router');
 const reservaQuartoRouter = require('./router/reserva_quarto_router');
 const routerEstadias = require('./router/estadia_router');
 const routerConsumos = require('./router/consumo_router');
+const relatorioRouter = require('./router/relatorio_router');
+
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use('/api', quartoRouter);
 app.use('/api', reservaQuartoRouter);
 app.use('/api', routerEstadias);
 app.use('/api', routerConsumos);
+app.use('/api', relatorioRouter);
 
 // Exporta o aplicativo configurado para ser ligado pelo arquivo centralizador server.js
 module.exports = app;

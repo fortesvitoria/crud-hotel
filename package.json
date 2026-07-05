@@ -14,5 +14,13 @@
     "express": "^5.2.1",
     "pg": "^8.22.0"
   },
-  "description": ""
+  "description": "> Projeto Prático desenvolvido para a disciplina de **Desenvolvimento de Serviços e APIs**.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fortesvitoria/crud-hotel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fortesvitoria/crud-hotel/issues"
+  },
+  "homepage": "https://github.com/fortesvitoria/crud-hotel#readme"
 }
