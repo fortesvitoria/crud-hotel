@@ -220,8 +220,6 @@ Funcionalidades:
 * **Framework Web:** [Express](https://expressjs.com/pt-br/)
 * **Linguagem:** JavaScript (ES6+)
 * **Banco de Dados:** * PostgreSQL.
-* **Autenticação:** JWT (JSON Web Tokens).
-* **Documentação da API:** Swagger.
 
 ---
 
