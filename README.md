@@ -30,7 +30,6 @@ Desenvolver uma API para gestão hoteleira que permita:
 4. Controlar o consumo de produtos durante a hospedagem;
 5. Gerenciar produtos e categorias;
 6. Gerar relatórios de hospedagem e consumo;
-7. Garantir autenticação e segurança dos usuários do sistema.
 
 ---
 
