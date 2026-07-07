@@ -9,7 +9,7 @@ async function listarProdutos() {
 }
 
 //INSERIR PRODUTO
-async function inserirProduto(produto) {
+async function inserir(produto) {
     if (!produto || Object.keys(produto).length === 0) {
         throw { status: 400, message: 'Produto vazio' };
     }
@@ -88,8 +88,7 @@ async function deletarProduto(id) {
 
 module.exports = {
     listarProdutos,
-    inserirProduto,
-    inserirProduto,
+    inserir,
     buscarProdutoPorId,
     atualizarProduto,
     deletarProduto
