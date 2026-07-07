@@ -197,24 +197,6 @@ Permite consultar:
 
 ---
 
-## 🔐 Autenticação de Usuários
-
-O sistema possui cadastro e autenticação para usuários do hotel.
-
-Dados cadastrados:
-
-* Nome completo;
-* E-mail;
-* Senha.
-
-Funcionalidades:
-
-* Cadastro de usuário;
-* Login;
-* Controle de acesso aos endpoints protegidos.
-
----
-
 ## 🚀 Tecnologias Utilizadas no Projeto
 * **Ambiente de Execução:** [Node.js](https://nodejs.org/)
 * **Framework Web:** [Express](https://expressjs.com/pt-br/)
